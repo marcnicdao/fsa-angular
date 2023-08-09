@@ -1,0 +1,27 @@
+<div class="container-fluid margin-top-s">
+  <div class="card-deck justify-content-space-between container row">
+    <div
+      *ngFor="let weather of cityWeathers"
+      class="card m-3 col-lg-3 col-md-4 col-sm-12 weather-card"
+      style="max-width: 540px"
+      [routerLink]="['details', weather.name]"
+    >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            src="https://openweathermap.org/img/wn/10d@2x.png"
+            class="img-fluid rounded-start"
+            alt="{{ weather.icon }}"
+          />
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ weather.name }}</h5>
+            <p class="card-text">Current: {{ weather.tempC }}&deg;C</p>
+            <p class="card-text">Hi: {{ weather.tempLowC }}&deg;C</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
