@@ -8,6 +8,7 @@ export class UtilService {
   constructor() {}
   // creates city weather object
   formatCityWeatherObject(data: any) {
+    console.log('data', data);
     let date = '';
     if (data.hasOwnProperty('dt_txt')) {
       date = data.dt_txt.split(' ')[0].slice(5);

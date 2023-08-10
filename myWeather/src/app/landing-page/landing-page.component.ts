@@ -3,6 +3,7 @@ import { Weather } from '../cityWeathers';
 import { HttpService } from '../http.service';
 import { UtilService } from '../util.service';
 import { Subscription } from 'rxjs';
+import { StateService } from '../state.service';
 
 @Component({
   selector: 'app-home',
@@ -11,23 +12,25 @@ import { Subscription } from 'rxjs';
 })
 export class LandingPageComponent implements OnInit, OnDestroy {
   cities: Weather[];
-  initCityNames: string[];
+  initCityNames: string[] = ['Chicago', 'San Francisco', 'New York'];
   subscription: Subscription;
 
   constructor(
     public httpService: HttpService,
-    private utilService: UtilService
+    private utilService: UtilService,
+    private stateService: StateService
   ) {}
 
   ngOnInit() {
     this.cities = [];
-    this.initCityNames = ['Chicago', 'San Francisco', 'New York'];
+    this.initCityNames;
     this.getInitCityWeather();
   }
 
   getInitCityWeather() {
+    console.log('aaa', this.stateService.getCities());
     this.subscription = this.httpService
-      .getInitialWeather(this.initCityNames)
+      .getInitialWeather(this.stateService.getCities())
       .subscribe((responses) => {
         responses.map((data, i) => {
           const citydata = this.utilService.formatCityWeatherObject(data);
@@ -37,11 +40,18 @@ export class LandingPageComponent implements OnInit, OnDestroy {
   }
 
   addCityWeather(cityName: string) {
-    console.log(cityName);
-    this.httpService.getWeather(cityName).subscribe((response) => {
-      console.log(response);
-      const citydata = this.utilService.formatCityWeatherObject(response);
-      this.cities.push(citydata);
+    this.httpService.getWeather(cityName).subscribe({
+      next: (response) => {
+        const citydata = this.utilService.formatCityWeatherObject(response);
+        this.cities.push(citydata);
+      },
+      error: (error) => {
+        console.error(error);
+      },
+      complete: () => {
+        const newCities: any = this.cities.map((city) => city.name);
+        this.stateService.setCities(newCities);
+      },
     });
   }
 

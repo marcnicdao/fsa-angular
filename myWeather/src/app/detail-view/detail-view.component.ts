@@ -34,16 +34,16 @@ export class DetailViewComponent implements OnInit {
       this.getCityWeather(params['cityName']);
     });
 
-    this.subscription = this.stateService.getTempUnit().subscribe(
-      (res) => {
+    this.subscription = this.stateService.getTempUnit().subscribe({
+      next: (res) => {
         this.tempUnit = res;
       },
-      (err) => {
+      error: (err) => {
         console.error(
           `An error occurred when getting temperature unit: ${err.message}`
         );
-      }
-    );
+      },
+    });
   }
 
   getCityForecast(cityName: string) {
