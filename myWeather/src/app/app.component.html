@@ -1,9 +1,26 @@
 <nav class="navbar navbar-light bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"> MyWeather </a>
+    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+      <div
+        class="btn btn-secondary"
+        [ngClass]="{ active: !isUsingF }"
+        (click)="selectCelsius()"
+      >
+        <span name="celsius" id="option1" autocomplete="off"></span>
+        Celsius
+      </div>
+      <div
+        class="btn btn-secondary"
+        [ngClass]="{ active: isUsingF }"
+        (click)="selectFahrenheit()"
+      >
+        <span name="fahrenheit" id="option2" autocomplete="off"></span>
+        Fahrenheit
+      </div>
+    </div>
   </div>
 </nav>
 <div class="container">
-  <div>Toggle F or C</div>
   <router-outlet></router-outlet>
 </div>

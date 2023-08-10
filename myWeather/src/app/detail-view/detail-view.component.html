@@ -1,1 +1,87 @@
-<p>detail-view works!</p>
+<div class="container">
+  <div class="row">
+    <h2>Detail View</h2>
+  </div>
+
+  <div *ngIf="weather">
+    <div class="container d-flex row justify-content-center align-items-center">
+      <div class="card col-6 weather-card">
+        <div class="row g-0">
+          <div
+            class="col-md-4 align-items-center justify-content-center d-flex"
+          >
+            <img
+              src="https://openweathermap.org/img/wn/{{ weather.icon }}@2x.png"
+              class="img-fluid rounded-start"
+              alt="{{ weather.icon }}"
+            />
+          </div>
+          <div class="col-md-8" *ngIf="weather">
+            <div class="card-body">
+              <h5 class="card-title">{{ weather.name }}</h5>
+              <p class="card-text" *ngIf="tempUnit === 'C'">
+                Current Temp: {{ weather.tempC }}&deg;C
+              </p>
+              <p class="card-text" *ngIf="tempUnit === 'F'">
+                Current Temp: {{ weather.tempF }}&deg;F
+              </p>
+              <p class="card-text" *ngIf="tempUnit === 'C'">
+                Current Hi: {{ weather.tempLowC }}&deg;C
+              </p>
+              <p class="card-text" *ngIf="tempUnit === 'F'">
+                Current Hi: {{ weather.tempLowF }}&deg;F
+              </p>
+              <p class="card-text" *ngIf="tempUnit === 'C'">
+                Current Low: {{ weather.tempHighC }}&deg;C
+              </p>
+              <p class="card-text" *ngIf="tempUnit === 'F'">
+                Current Low: {{ weather.tempHighF }}&deg;F
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card col-6">
+        <div class="padding-0 d-flex">
+          <table class="table">
+            <tbody>
+              <tr class="weatherLabel">
+                <th scope="row"></th>
+                <th>Date</th>
+                <th></th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Humidity</th>
+              </tr>
+
+              <tr
+                class="weatherDataContainer"
+                *ngFor="let forecast of detailWeather.fiveDayForecast"
+              >
+                <th scope="row"></th>
+                <td class="m-2">{{ forecast.date + "/2023" | date }}</td>
+                <td>
+                  <img
+                    src="https://openweathermap.org/img/wn/{{
+                      forecast.icon
+                    }}.png"
+                    alt=""
+                  />
+                </td>
+                <td *ngIf="tempUnit === 'F'">{{ forecast.tempHighF }}&deg;F</td>
+                <td *ngIf="tempUnit === 'F'">{{ forecast.tempLowF }}&deg;F</td>
+                <td *ngIf="tempUnit === 'C'">{{ forecast.tempHighC }}&deg;F</td>
+                <td *ngIf="tempUnit === 'C'">{{ forecast.tempLowC }}&deg;F</td>
+                <td>{{ forecast.humidity }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <button type="button" class="btn btn-secondary margin-top-s" routerLink="/">
+      Back
+    </button>
+  </div>
+</div>
